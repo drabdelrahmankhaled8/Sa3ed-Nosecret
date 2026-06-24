@@ -1,0 +1,3602 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ساعد النوسيكرت - اختبار تثبيت المعرفة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5f3c;
+            --primary-light: #2d8a5e;
+            --primary-dark: #0d3d26;
+            --accent: #c9a227;
+            --accent-light: #e8d5a3;
+            --gold: #d4af37;
+            --gold-dark: #b8941f;
+            --success: #27ae60;
+            --success-light: #d4edda;
+            --error: #e74c3c;
+            --error-light: #f8d7da;
+            --warning: #f39c12;
+            --bg-dark: #0a0a0a;
+            --bg-card: #111111;
+            --bg-elevated: #1a1a1a;
+            --text-primary: #f0f0f0;
+            --text-secondary: #a0a0a0;
+            --text-muted: #666666;
+            --border: #2a2a2a;
+            --shadow: 0 8px 32px rgba(0,0,0,0.4);
+            --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 20% 50%, rgba(26, 95, 60, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(26, 95, 60, 0.06) 0%, transparent 50%);
+            animation: bgRotate 30s linear infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.3; }
+            90% { opacity: 0.3; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, rgba(26, 95, 60, 0.9), rgba(13, 61, 38, 0.95));
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid var(--gold);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-gold);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        .logo-text p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem 1rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            text-align: center;
+            padding: 4rem 2rem;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), #fff, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: none;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 15px rgba(26, 95, 60, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(26, 95, 60, 0.4);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--gold);
+            color: var(--gold);
+        }
+
+        .btn-outline:hover {
+            background: var(--gold);
+            color: var(--bg-dark);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Quiz Screen */
+        .quiz-screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .progress-bar-container {
+            position: sticky;
+            top: 85px;
+            z-index: 100;
+            background: var(--bg-dark);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-elevated);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--gold));
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3));
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .progress-text span {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--gold), var(--primary));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .question-card:hover::before {
+            opacity: 1;
+        }
+
+        .question-card:hover {
+            border-color: var(--gold);
+            transform: translateX(-5px);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-number {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .question-badge {
+            font-size: 0.75rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 600;
+        }
+
+        .badge-mcq {
+            background: rgba(26, 95, 60, 0.2);
+            color: var(--primary-light);
+            border: 1px solid var(--primary);
+        }
+
+        .badge-tf {
+            background: rgba(212, 175, 55, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        /* Options */
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            background: var(--bg-elevated);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .option:hover {
+            border-color: var(--primary-light);
+            background: rgba(26, 95, 60, 0.1);
+        }
+
+        .option-letter {
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .option-text {
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        /* Selected State */
+        .option.selected {
+            border-color: var(--primary-light);
+            background: rgba(26, 95, 60, 0.15);
+        }
+
+        .option.selected .option-letter {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Correct State */
+        .option.correct {
+            border-color: var(--success);
+            background: var(--success-light);
+        }
+
+        .option.correct .option-letter {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        /* Wrong State */
+        .option.wrong {
+            border-color: var(--error);
+            background: var(--error-light);
+        }
+
+        .option.wrong .option-letter {
+            background: var(--error);
+            border-color: var(--error);
+            color: white;
+        }
+
+        /* Disabled State */
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option.disabled:hover {
+            border-color: var(--border);
+        }
+
+        /* Feedback */
+        .feedback {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .feedback-correct {
+            background: rgba(39, 174, 96, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .feedback-wrong {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .feedback-icon {
+            font-size: 1.2rem;
+            margin-left: 0.5rem;
+        }
+
+        .feedback-text {
+            font-weight: 700;
+        }
+
+        .correct-answer-text {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .correct-answer-text strong {
+            color: var(--success);
+        }
+
+        /* Explanation */
+        .explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(212, 175, 55, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        .explanation-title {
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+        }
+
+        .submit-btn {
+            padding: 1.2rem 4rem;
+            font-size: 1.2rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 15px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Screen */
+        .results-screen {
+            display: none;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .results-card {
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .results-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .score-circle {
+            width: 180px;
+            height: 180px;
+            margin: 2rem auto;
+            position: relative;
+        }
+
+        .score-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .score-circle-bg {
+            fill: none;
+            stroke: var(--bg-elevated);
+            stroke-width: 8;
+        }
+
+        .score-circle-progress {
+            fill: none;
+            stroke: url(#scoreGradient);
+            stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.5s ease;
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-percentage {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--gold);
+        }
+
+        .score-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .results-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .result-stat {
+            padding: 1rem;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .result-stat-value {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .result-stat-value.correct { color: var(--success); }
+        .result-stat-value.wrong { color: var(--error); }
+        .result-stat-value.total { color: var(--gold); }
+
+        .result-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .grade-badge {
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-top: 1rem;
+        }
+
+        .grade-excellent { background: rgba(39, 174, 96, 0.2); color: var(--success); border: 2px solid var(--success); }
+        .grade-good { background: rgba(243, 156, 18, 0.2); color: var(--warning); border: 2px solid var(--warning); }
+        .grade-pass { background: rgba(212, 175, 55, 0.2); color: var(--gold); border: 2px solid var(--gold); }
+        .grade-fail { background: rgba(231, 76, 60, 0.2); color: var(--error); border: 2px solid var(--error); }
+
+        /* Review Section */
+        .review-section {
+            margin-top: 2rem;
+        }
+
+        .review-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .review-item {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .review-status {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .review-status.correct { background: var(--success-light); color: var(--success); }
+        .review-status.wrong { background: var(--error-light); color: var(--error); }
+
+        .review-content {
+            flex: 1;
+        }
+
+        .review-question {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .review-answer {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .review-answer strong {
+            color: var(--text-primary);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: var(--gold);
+            text-decoration: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-title { font-size: 2rem; }
+            .header-stats { display: none; }
+            .results-stats { grid-template-columns: 1fr; }
+            .question-card { padding: 1.5rem; }
+            .btn { padding: 0.8rem 1.5rem; font-size: 0.9rem; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-light);
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* Timer */
+        .timer {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            background: var(--bg-card);
+            border: 2px solid var(--gold);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            box-shadow: var(--shadow-gold);
+            z-index: 100;
+        }
+
+        .timer i {
+            font-size: 1.2rem;
+        }
+
+        /* Hide timer on mobile */
+        @media (max-width: 768px) {
+            .timer { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>ساعد النوسيكرت</h1>
+                    <p>اختبار تثبيت المعرفة في الأسنان</p>
+                </div>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="total-q-header">231</div>
+                    <div class="stat-label">سؤال</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="answered-header">0</div>
+                    <div class="stat-label">مجاب</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <h1 class="welcome-title">اختبر معلوماتك</h1>
+            <p class="welcome-subtitle">
+                اختبار تفاعلي متكامل يغطي 231 سؤالاً في مجال طب الأسنان الترميمي والزراعة<br>
+                مع تصحيح تلقائي وإظهار الإجابات الصحيحة فوراً
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-check-circle"></i></div>
+                    <div class="feature-title">تصحيح تلقائي</div>
+                    <div class="feature-desc">تصحيح فوري مع إظهار الإجابة الصحيحة والتعليل</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <div class="feature-title">احتساب النسبة</div>
+                    <div class="feature-desc">عرض النسبة المئوية والتقدير بعد الانتهاء</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-redo"></i></div>
+                    <div class="feature-title">إعادة الاختبار</div>
+                    <div class="feature-desc">إمكانية إعادة الاختبار بترتيب عشوائي للأسئلة</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <div class="feature-title">تصميم متجاوب</div>
+                    <div class="feature-desc">يعمل على جميع الأجهزة بكفاءة عالية</div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-gold" onclick="startQuiz()">
+                    <i class="fas fa-play"></i>
+                    ابدأ الاختبار
+                </button>
+                <button class="btn btn-outline" onclick="startQuizRandom()">
+                    <i class="fas fa-random"></i>
+                    عشوائي
+                </button>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div class="quiz-screen" id="quizScreen">
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="progress-text">
+                    تم الإجابة على <span id="answeredCount">0</span> من <span id="totalCount">231</span> سؤال
+                </div>
+            </div>
+
+            <div id="questionsContainer"></div>
+
+            <div class="submit-section">
+                <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">
+                    <i class="fas fa-paper-plane"></i>
+                    إنهاء الاختبار وعرض النتيجة
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div class="results-screen" id="resultsScreen">
+            <div class="results-card">
+                <div class="results-icon" id="resultsIcon">🏆</div>
+                <h2 class="results-title" id="resultsTitle">أحسنت!</h2>
+                <p style="color: var(--text-secondary); margin-bottom: 1rem;" id="resultsMessage">لقد أكملت الاختبار بنجاح</p>
+
+                <div class="score-circle">
+                    <svg width="180" height="180" viewBox="0 0 180 180">
+                        <defs>
+                            <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#1a5f3c"/>
+                                <stop offset="100%" style="stop-color:#d4af37"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="score-circle-bg" cx="90" cy="90" r="80"/>
+                        <circle class="score-circle-progress" id="scoreCircle" cx="90" cy="90" r="80" 
+                                stroke-dasharray="502.65" stroke-dashoffset="502.65"/>
+                    </svg>
+                    <div class="score-text">
+                        <div class="score-percentage" id="scorePercentage">0%</div>
+                        <div class="score-label">نسبة النجاح</div>
+                    </div>
+                </div>
+
+                <div class="grade-badge" id="gradeBadge">ممتاز</div>
+
+                <div class="results-stats">
+                    <div class="result-stat">
+                        <div class="result-stat-value correct" id="correctCount">0</div>
+                        <div class="result-stat-label">إجابات صحيحة</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value wrong" id="wrongCount">0</div>
+                        <div class="result-stat-label">إجابات خاطئة</div>
+                    </div>
+                    <div class="result-stat">
+                        <div class="result-stat-value total" id="totalAnswered">0</div>
+                        <div class="result-stat-label">مجموع الإجابات</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="retakeQuiz()">
+                    <i class="fas fa-redo"></i>
+                    إعادة الاختبار
+                </button>
+                <button class="btn btn-gold" onclick="retakeQuizRandom()">
+                    <i class="fas fa-random"></i>
+                    عشوائي
+                </button>
+                <button class="btn btn-outline" onclick="showReview()">
+                    <i class="fas fa-eye"></i>
+                    مراجعة الأخطاء
+                </button>
+            </div>
+
+            <div class="review-section" id="reviewSection" style="display: none;">
+                <h3 class="review-title">
+                    <i class="fas fa-list-check"></i>
+                    مراجعة الإجابات
+                </h3>
+                <div id="reviewContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer -->
+    <div class="timer" id="timer" style="display: none;">
+        <i class="fas fa-clock"></i>
+        <span id="timerText">00:00</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>ساعد النوسيكرت © 2024 | تم تطويره بعناية لتثبيت المعلومات</p>
+    </footer>
+
+    <script>
+const questionsData = [
+    {
+        id: 0,
+        question: "Open-tray impression copings are used for:",
+        options: ["Easy removal", "Divergent implants", "Single unit", "Low cost"],
+        answer: "B",
+        correctText: "Divergent implants",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 1,
+        question: "Implant should be placed at least how far from the mental foramen?",
+        options: ["7 mm", "1 mm", "3 mm", "5 mm"],
+        answer: "D",
+        correctText: "5 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 2,
+        question: "Esthetic failure can be due to:",
+        options: ["Reproduction of neighbouring shade", "Insufficient reduction", "Proper reduction", "Ideal contour"],
+        answer: "B",
+        correctText: "Insufficient reduction",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 3,
+        question: "Minimum number of implants for complete arch restoration is usually:",
+        options: ["6", "4", "2", "3"],
+        answer: "B",
+        correctText: "4",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 4,
+        question: "Calculus removal around implants should use:",
+        options: ["Metal scalers", "Ultrasonic with metal tip", "Rotary brushes", "Plastic scalers"],
+        answer: "D",
+        correctText: "Plastic scalers",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 5,
+        question: "Metalift system is used for:",
+        options: ["Removing FPD by drilling through metal", "Polishing", "Impression making", "Cementing"],
+        answer: "A",
+        correctText: "Removing FPD by drilling through metal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 6,
+        question: "Richwill FPD remover becomes pliable at:",
+        options: ["100°F", "200°F", "145°F", "250°F"],
+        answer: "C",
+        correctText: "145°F",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 7,
+        question: "Implant analog represents in laboratory:",
+        options: ["Top of implant", "Bone", "Gingiva only", "Soft tissue"],
+        answer: "A",
+        correctText: "Top of implant",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 8,
+        question: "Sharper cusp inclines on implant crown increase:",
+        options: ["Retention", "Resultant force on components", "Cement seal", "Esthetics"],
+        answer: "B",
+        correctText: "Resultant force on components",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 9,
+        question: "Two-stage implants require healing period of usually:",
+        options: ["2 weeks in both jaws", "3 months in mandible, 6 months in maxilla", "6 months in mandible, 12 months in maxilla", "1 month in mandible, 2 months in maxilla"],
+        answer: "B",
+        correctText: "3 months in mandible, 6 months in maxilla",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 10,
+        question: "Pier abutment requires:",
+        options: ["No connector", "Soldered only", "Rigid connector on both sides", "Non-rigid connector"],
+        answer: "D",
+        correctText: "Non-rigid connector",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 11,
+        question: "Connecting a single implant to natural tooth can cause:",
+        options: ["Improved stability", "Stress at implant neck", "Faster healing", "No problems"],
+        answer: "B",
+        correctText: "Stress at implant neck",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 12,
+        question: "Intraoral porcelain repair of small chip uses:",
+        options: ["Zinc phosphate", "Can't be repaired", "Gold foil", "Composite resin"],
+        answer: "D",
+        correctText: "Composite resin",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 13,
+        question: "Secondary occlusal trauma leads to:",
+        options: ["Healing", "No bone loss", "Reduced mobility", "Increased mobility and bone resorption"],
+        answer: "D",
+        correctText: "Increased mobility and bone resorption",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 14,
+        question: "V-metal primer is used for:",
+        options: ["Zirconia", "Dentin", "Enamel", "Gold alloy"],
+        answer: "D",
+        correctText: "Gold alloy",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 15,
+        question: "D1 bone is mainly:",
+        options: ["Thick cortical with dense trabecular", "Thin cortical with dense trabecular", "Thin cortical with low density trabecular", "Mainly cortical compact bone"],
+        answer: "D",
+        correctText: "Mainly cortical compact bone",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 16,
+        question: "Subgingival finish line ideally should be:",
+        options: ["At the level of attached gingiva", "Midway in gingival sulcus", "Subgingival >3 mm", "On root surface"],
+        answer: "B",
+        correctText: "Midway in gingival sulcus",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 17,
+        question: "Which radiograph is best as initial image for implant planning?",
+        options: ["Cephalometric", "Occlusal", "Periapical", "Panoramic"],
+        answer: "D",
+        correctText: "Panoramic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 18,
+        question: "Framework fit should be checked with how many screws?",
+        options: ["Two screws", "One screw only", "No screws", "All screws"],
+        answer: "B",
+        correctText: "One screw only",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 19,
+        question: "Pinledge retainer gains retention mainly by:",
+        options: ["Pins", "Cement", "Friction", "Grooves"],
+        answer: "A",
+        correctText: "Pins",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 20,
+        question: "Coefficient of thermal expansion mismatch between metal and porcelain should be:",
+        options: ["Metal lower", "Equal", "Metal higher by 1×10⁻⁶", "Porcelain higher by 5×10⁻⁶"],
+        answer: "C",
+        correctText: "Metal higher by 1×10⁻⁶",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 21,
+        question: "Implant surgery should use low-speed, high-torque handpiece with:",
+        options: ["High speed only", "Dry drilling", "Copious irrigation", "No irrigation"],
+        answer: "C",
+        correctText: "Copious irrigation",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 22,
+        question: "Which is not a type of impression coping?",
+        options: ["Transfer (indirect)", "Pickup (direct)", "Fixture coping", "Healing coping"],
+        answer: "D",
+        correctText: "Healing coping",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 23,
+        question: "Lateral perforation into PDL requires:",
+        options: ["Extraction", "Post cementation", "Periodontal surgery and MTA", "No treatment"],
+        answer: "C",
+        correctText: "Periodontal surgery and MTA",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 24,
+        question: "Perforation into bifurcation area usually requires:",
+        options: ["Post placement", "MTA repair", "Extraction", "RCT"],
+        answer: "C",
+        correctText: "Extraction",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 25,
+        question: "In maxillary posterior region, bone is less dense and requires:",
+        options: ["Immediate loading", "Shorter healing time", "Fewer implants", "Longer integration time (6 months)"],
+        answer: "D",
+        correctText: "Longer integration time (6 months)",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 26,
+        question: "Diabetic patient needs follow-up every:",
+        options: ["6 months", "12 months", "1 month", "3 months"],
+        answer: "D",
+        correctText: "3 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 27,
+        question: "To reduce FPD flexing, use:",
+        options: ["Base metal alloy", "Thin pontics", "Low yield strength alloy", "Small connectors"],
+        answer: "A",
+        correctText: "Base metal alloy",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 28,
+        question: "Absolute contraindication for dental implants includes:",
+        options: ["Unrealistic patient expectation", "Lack of operator experience", "Poor oral hygiene", "Uncontrolled metabolic disease"],
+        answer: "D",
+        correctText: "Uncontrolled metabolic disease",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 29,
+        question: "Part seating problem with loose retainer indicates:",
+        options: ["Occlusal trauma", "Esthetic failure", "Cement excess", "Caries"],
+        answer: "C",
+        correctText: "Cement excess",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 30,
+        question: "Most common biological failure in implants:",
+        options: ["Caries", "Abutment fracture", "Periodontal breakdown", "Pulp injury"],
+        answer: "C",
+        correctText: "Periodontal breakdown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 31,
+        question: "Gingival hyperactivity after crown cementation may be due to:",
+        options: ["Overcontouring", "Deep margin", "Occlusal trauma", "Gingival recession"],
+        answer: "A",
+        correctText: "Overcontouring",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 32,
+        question: "Disadvantages of partial coverage:",
+        options: ["More tooth reduction", "Less retention", "Poor esthetics", "High cost"],
+        answer: "B",
+        correctText: "Less retention",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 33,
+        question: "_____ fits into implant and represents the preparation:",
+        options: ["Healing screw", "Abutment", "Interim abutment", "Waxing sleeve"],
+        answer: "B",
+        correctText: "Abutment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 34,
+        question: "Post preparation on right direction to prevent:",
+        options: ["Esthetic failure", "Cement washout", "Caries", "Torque"],
+        answer: "B",
+        correctText: "Cement washout",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 35,
+        question: "Silane coupling agent is used to bond:",
+        options: ["Porcelain to composite", "Enamel to resin", "Cement to tooth", "Metal to metal"],
+        answer: "A",
+        correctText: "Porcelain to composite",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 36,
+        question: "What is NOT an advantage of osseointegrated implants?",
+        options: ["Always removable", "In-office procedure", "Documented success rate", "Retrievability"],
+        answer: "A",
+        correctText: "Always removable",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 37,
+        question: "Waxing sleeve becomes part of:",
+        options: ["Impression", "Surgical guide", "Healing abutment", "Prosthesis"],
+        answer: "D",
+        correctText: "Prosthesis",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 38,
+        question: "Open contacts lead to:",
+        options: ["Better hygiene", "Reduced caries", "Food impaction", "Stronger bridge"],
+        answer: "C",
+        correctText: "Food impaction",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 39,
+        question: "Minimum recommended distance between adjacent implants is:",
+        options: ["2.0 mm", "1.0 mm", "5.0 mm", "3.0 mm"],
+        answer: "D",
+        correctText: "3.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 40,
+        question: "Immediate loading protocols require:",
+        options: ["Removable prosthesis", "Stable prosthesis across arch", "Long healing", "Poor initial stability"],
+        answer: "B",
+        correctText: "Stable prosthesis across arch",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 41,
+        question: "Distance between implant apex and nasal vestibule should be:",
+        options: ["2.0 mm", "0.5 mm", "1.0 mm", "3.0 mm"],
+        answer: "C",
+        correctText: "1.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 42,
+        question: "Root perforation can be due to:",
+        options: ["Fiber post", "Delayed loading", "Overwidening post space", "Small post"],
+        answer: "C",
+        correctText: "Overwidening post space",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 43,
+        question: "Which is used to clean under fixed bridge work:",
+        options: ["Unwaxed floss", "Large diameter brush", "Stiff segment", "Non-threaded part"],
+        answer: "C",
+        correctText: "Stiff segment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 44,
+        question: "Occlusal contact restoration should be in:",
+        options: ["Marginal ridge", "Distal fossa", "Mesial fossa", "Central fossa"],
+        answer: "D",
+        correctText: "Central fossa",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 45,
+        question: "Cemented implant crowns are luted with:",
+        options: ["Interim cement for retrievability", "Gutta-percha", "Permanent cement only", "No cement"],
+        answer: "A",
+        correctText: "Interim cement for retrievability",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 46,
+        question: "Healing time for maxillary implant integration is generally:",
+        options: ["2 weeks", "6 months", "4 months", "3 months"],
+        answer: "B",
+        correctText: "6 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 47,
+        question: "To reduce FPD flexing, use:",
+        options: ["Base metal alloy", "Thin pontics", "Low yield strength alloy", "Small connectors"],
+        answer: "A",
+        correctText: "Base metal alloy",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 48,
+        question: "Diabetic patient needs follow-up every:",
+        options: ["6 months", "12 months", "1 month", "3 months"],
+        answer: "D",
+        correctText: "3 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 49,
+        question: "Perforation into bifurcation area usually requires:",
+        options: ["Post placement", "MTA repair", "Extraction", "RCT"],
+        answer: "C",
+        correctText: "Extraction",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 50,
+        question: "Bending of FPD is proportional to:",
+        options: ["Thickness³", "Thickness²", "Length³", "Length²"],
+        answer: "C",
+        correctText: "Length³",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 51,
+        question: "Implant screw tightening should use:",
+        options: ["Finger pressure", "Torque wrench", "Pliers", "Mallet"],
+        answer: "B",
+        correctText: "Torque wrench",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 52,
+        question: "Antirotational feature in implant prevents:",
+        options: ["Gingivitis", "Screw loosening", "Caries", "Bone loss"],
+        answer: "B",
+        correctText: "Screw loosening",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 53,
+        question: "Full coverage retainer is indicated in:",
+        options: ["Intact enamel", "Thin cervical neck", "Low caries index", "Short clinical crown"],
+        answer: "D",
+        correctText: "Short clinical crown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 54,
+        question: "Which is NOT an advantage of osseointegrated implants?",
+        options: ["Always removable", "In-office procedure", "Documented success rate", "Retrievability"],
+        answer: "A",
+        correctText: "Always removable",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 55,
+        question: "Caries in partial coverage — treatment if large fracture:",
+        options: ["No treatment", "Extraction", "RCT only", "New full coverage if large fracture"],
+        answer: "D",
+        correctText: "New full coverage if large fracture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 56,
+        question: "Subperiosteal and transosteal implants are primarily designed for:",
+        options: ["Immediate loading only", "Partially edentulous patients", "Completely edentulous patients", "Single tooth replacement"],
+        answer: "C",
+        correctText: "Completely edentulous patients",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 57,
+        question: "CAD/CAM abutments are fabricated using:",
+        options: ["Scanning and hand carving", "Scanning and Lost wax technique", "Scanning and milling", "Scanning and Electroforming"],
+        answer: "C",
+        correctText: "Scanning and milling",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 58,
+        question: "Overconvergence of preparation leads to lack of retention.",
+        options: ["TRUE", "FALSE"],
+        answer: "A",
+        correctText: "TRUE",
+        isTrueFalse: true,
+        explanation: ""
+    },
+    {
+        id: 59,
+        question: "Cover screw is placed during second-stage surgery.",
+        options: ["TRUE", "FALSE"],
+        answer: "B",
+        correctText: "FALSE",
+        isTrueFalse: true,
+        explanation: "Cover screw is placed during first-stage; healing abutment in second-stage"
+    },
+    {
+        id: 60,
+        question: "Lingual inclination can be due to deep bite.",
+        options: ["TRUE", "FALSE"],
+        answer: "A",
+        correctText: "TRUE",
+        isTrueFalse: true,
+        explanation: ""
+    },
+    {
+        id: 61,
+        question: "Maintenance failure is patient's responsibility only.",
+        options: ["TRUE", "FALSE"],
+        answer: "B",
+        correctText: "FALSE",
+        isTrueFalse: true,
+        explanation: "It is both patient and dentist responsibility"
+    },
+    {
+        id: 62,
+        question: "Crown splitting is a conservative removal method.",
+        options: ["TRUE", "FALSE"],
+        answer: "B",
+        correctText: "FALSE",
+        isTrueFalse: true,
+        explanation: "It is a destructive method"
+    },
+    {
+        id: 63,
+        question: "Which of the following is NOT a major subgroup of dental implants?",
+        options: ["Subperiosteal", "Transosteal", "Endosteal", "Supraosteal"],
+        answer: "D",
+        correctText: "Supraosteal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 64,
+        question: "Endosteal dental implants are most commonly used for:",
+        options: ["Completely edentulous patients", "Partially edentulous patients", "Patients with severe bone loss", "Pediatric patients"],
+        answer: "B",
+        correctText: "Partially edentulous patients",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 65,
+        question: "The Brånemark system is credited with setting the precedent for:",
+        options: ["Immediate loading protocols", "Atraumatic implant placement and delayed loading", "Blade implants", "Subperiosteal implants"],
+        answer: "B",
+        correctText: "Atraumatic implant placement and delayed loading",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 66,
+        question: "The recommended minimum distance between adjacent implants is:",
+        options: ["1.0 mm", "2.0 mm", "3.0 mm", "5.0 mm"],
+        answer: "C",
+        correctText: "3.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 67,
+        question: "Which bone quality classification represents mainly cortical plate compact bone?",
+        options: ["D1", "D2", "D3", "D4"],
+        answer: "A",
+        correctText: "D1",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 68,
+        question: "The recommended healing time for implants in the maxilla is:",
+        options: ["2 months", "3 months", "4 months", "6 months"],
+        answer: "D",
+        correctText: "6 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 69,
+        question: "The Hounsfield scale is used to describe:",
+        options: ["Bone density", "Implant torque", "Crown fit", "Cement thickness"],
+        answer: "A",
+        correctText: "Bone density",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 70,
+        question: "Which type of implant is designed to immediately project through mucosa into the oral cavity?",
+        options: ["Two-stage implant", "One-stage implant", "Subperiosteal implant", "Transosteal implant"],
+        answer: "B",
+        correctText: "One-stage implant",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 71,
+        question: "The ideal distance from the implant apex to the inferior alveolar canal should be at least:",
+        options: ["1.0 mm", "2.0 mm", "3.0 mm", "5.0 mm"],
+        answer: "B",
+        correctText: "2.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 72,
+        question: "Which imaging modality is considered the best initial image for implant planning?",
+        options: ["CT scan", "CBCT", "Panoramic radiograph", "Periapical radiograph"],
+        answer: "C",
+        correctText: "Panoramic radiograph",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 73,
+        question: "The minimum recommended distance between implant and adjacent natural tooth is:",
+        options: ["0.5 mm", "1.0 mm", "1.5 mm", "2.0 mm"],
+        answer: "B",
+        correctText: "1.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 74,
+        question: "Blade implants are also known as:",
+        options: ["Root form implants", "Plate form implants", "Subperiosteal implants", "Transosteal implants"],
+        answer: "B",
+        correctText: "Plate form implants",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 75,
+        question: "The recommended minimum horizontal bone dimension for implant placement is:",
+        options: ["4 mm", "5 mm", "6 mm", "8 mm"],
+        answer: "C",
+        correctText: "6 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 76,
+        question: "Which is a contraindication for dental implants according to the NIH Consensus Conference?",
+        options: ["Poor oral hygiene", "Age over 60 years", "Smoking", "Diabetes mellitus"],
+        answer: "A",
+        correctText: "Poor oral hygiene",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 77,
+        question: "The apical extent of the implant should ideally engage which type of bone?",
+        options: ["Cancellous bone", "Cortical bone", "Trabecular bone", "Marrow space"],
+        answer: "B",
+        correctText: "Cortical bone",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 78,
+        question: "The recommended integration time in the anterior part of the mandible is:",
+        options: ["2 months", "3 months", "4 months", "6 months"],
+        answer: "B",
+        correctText: "3 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 79,
+        question: "CT technology for implant planning has the disadvantage of:",
+        options: ["Poor image quality", "High radiation exposure and cost", "Inability to show bone width", "Inability to show sinus location"],
+        answer: "B",
+        correctText: "High radiation exposure and cost",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 80,
+        question: "Which type of impression coping is used for divergent implants?",
+        options: ["Transfer coping", "Pickup/open tray coping", "Closed tray coping", "Abutment coping"],
+        answer: "B",
+        correctText: "Pickup/open tray coping",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 81,
+        question: "Cement-retained implant crowns have the advantage of:",
+        options: ["Better retrievability", "Easier removal", "Simplicity and lower cost", "Better screw access"],
+        answer: "C",
+        correctText: "Simplicity and lower cost",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 82,
+        question: "The antirotational feature in implants is important for:",
+        options: ["Bone integration", "Preventing screw loosening", "Soft tissue healing", "Reducing inflammation"],
+        answer: "B",
+        correctText: "Preventing screw loosening",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 83,
+        question: "UCLA abutment refers to:",
+        options: ["A type of healing cap", "A nonsegmented implant crown", "A surgical guide", "A torque wrench"],
+        answer: "B",
+        correctText: "A nonsegmented implant crown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 84,
+        question: "The recommended distance between interdental bone and contact point for papilla presence is:",
+        options: ["Less than 3 mm", "Less than 5 mm", "More than 8 mm", "Between 5-7 mm"],
+        answer: "B",
+        correctText: "Less than 5 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 85,
+        question: "Which material is commonly used for implant abutments in the esthetic zone?",
+        options: ["Stainless steel", "Zirconia", "Gold alloy", "Amalgam"],
+        answer: "B",
+        correctText: "Zirconia",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 86,
+        question: "The primary complication with dental implant therapy is:",
+        options: ["Implant fracture", "Bone loss around the implant", "Abutment loosening", "Cement failure"],
+        answer: "B",
+        correctText: "Bone loss around the implant",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 87,
+        question: "Any bone loss exceeding _____ per year is cause for concern:",
+        options: ["0.1 mm", "0.2 mm", "0.5 mm", "1.0 mm"],
+        answer: "B",
+        correctText: "0.2 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 88,
+        question: "Which cement is recommended for cement-retained implant crowns to allow retrievability?",
+        options: ["Zinc phosphate", "Glass ionomer", "Interim cement", "Resin cement"],
+        answer: "C",
+        correctText: "Interim cement",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 89,
+        question: "The crown-to-implant ratio is more favorable when the crown is:",
+        options: ["Long", "Short", "Wide", "Narrow"],
+        answer: "B",
+        correctText: "Short",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 90,
+        question: "Which type of implants are considered state-of-the-art?",
+        options: ["Blade implants", "Subperiosteal implants", "Root-form implants", "Transosteal implants"],
+        answer: "C",
+        correctText: "Root-form implants",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 91,
+        question: "The minimum recommended distance from implant to mental foramen is:",
+        options: ["2 mm", "3 mm", "4 mm", "5 mm"],
+        answer: "D",
+        correctText: "5 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 92,
+        question: "Which factor is NOT associated with implant bone loss?",
+        options: ["Excessive occlusal forces", "Poor oral hygiene", "Implant size and shape", "Increased fluoride exposure"],
+        answer: "D",
+        correctText: "Increased fluoride exposure",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 93,
+        question: "Which type of retainer is classified as intra-radicular?",
+        options: ["Full coverage crown", "Partial coverage crown", "Post crown", "Inlay"],
+        answer: "C",
+        correctText: "Post crown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 94,
+        question: "Full coverage retainers are indicated in all EXCEPT:",
+        options: ["Short clinical crown", "High caries index", "Intact tooth with normal anatomy", "Endodontically treated abutment"],
+        answer: "C",
+        correctText: "Intact tooth with normal anatomy",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 95,
+        question: "The advantage of partial coverage retainers over full coverage is:",
+        options: ["More retention", "More strength", "More conservative", "Better for short teeth"],
+        answer: "C",
+        correctText: "More conservative",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 96,
+        question: "Which condition contraindicates partial coverage retainers?",
+        options: ["Intact teeth", "Increased crown length", "High caries index", "Deep cervical abrasion"],
+        answer: "C",
+        correctText: "High caries index",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 97,
+        question: "The bending of a fixed partial denture is proportional to:",
+        options: ["Length²", "Length³", "Thickness²", "Thickness³"],
+        answer: "B",
+        correctText: "Length³",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 98,
+        question: "In a cantilever bridge, which type of retainer is indicated?",
+        options: ["Partial coverage", "Full coverage", "Resin bonded", "Pinledge"],
+        answer: "B",
+        correctText: "Full coverage",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 99,
+        question: "The force in the molar region is approximately:",
+        options: ["85-111 N", "133-324 N", "200-890 N", "225-445 N"],
+        answer: "C",
+        correctText: "200-890 N",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 100,
+        question: "Which factor does NOT affect selection of retainers?",
+        options: ["Age of patient", "Existing caries", "Patient's occupation", "Type of occlusion"],
+        answer: "C",
+        correctText: "Patient's occupation",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 101,
+        question: "The cuspid region is subjected to force of approximately:",
+        options: ["85-111 N", "133-324 N", "200-890 N", "225-445 N"],
+        answer: "B",
+        correctText: "133-324 N",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 102,
+        question: "Pinledge retainer uses which type of retention?",
+        options: ["Encirclement", "Post in root canal", "Pins", "Grooves"],
+        answer: "C",
+        correctText: "Pins",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 103,
+        question: "The minimum age for full coverage crowns in young patients is approximately:",
+        options: ["10-12 years", "14-16 years", "18-20 years", "22-24 years"],
+        answer: "C",
+        correctText: "18-20 years",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 104,
+        question: "Which type of retainer provides the highest esthetics?",
+        options: ["Full metal crown", "Ceramic crown", "3/4 crown", "Pinledge"],
+        answer: "B",
+        correctText: "Ceramic crown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 105,
+        question: "In a pier abutment, which type of retainer is indicated?",
+        options: ["Partial coverage with grooves", "Full coverage with precision attachment", "Resin bonded", "7/8 crown"],
+        answer: "B",
+        correctText: "Full coverage with precision attachment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 106,
+        question: "The role of cement in retainers is primarily to:",
+        options: ["Provide retention", "Seal the space between retainer and abutment", "Increase strength", "Improve esthetics"],
+        answer: "B",
+        correctText: "Seal the space between retainer and abutment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 107,
+        question: "Which condition requires crown lengthening before retainer placement?",
+        options: ["Short clinical crown", "Thin teeth", "Bell shaped teeth", "Malformed teeth"],
+        answer: "A",
+        correctText: "Short clinical crown",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 108,
+        question: "The anterior region is subjected to force of approximately:",
+        options: ["85-111 N", "133-324 N", "200-890 N", "225-445 N"],
+        answer: "A",
+        correctText: "85-111 N",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 109,
+        question: "Which is NOT a disadvantage of full coverage retainers?",
+        options: ["Less conservative", "Poor soft tissue response", "Less retention", "Poor esthetics (full metal)"],
+        answer: "C",
+        correctText: "Less retention",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 110,
+        question: "3/4 crown retainers are more retentive due to:",
+        options: ["Full encirclement", "Box shaped grooves", "Post in root canal", "Pins"],
+        answer: "B",
+        correctText: "Box shaped grooves",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 111,
+        question: "In deep bite cases, which type of retainer is recommended?",
+        options: ["Partial coverage", "Resin bonded", "Full coverage", "Pinledge"],
+        answer: "C",
+        correctText: "Full coverage",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 112,
+        question: "Which type of retainer is least conservative?",
+        options: ["1/2 crown", "3/4 crown", "Full coverage", "Pinledge"],
+        answer: "C",
+        correctText: "Full coverage",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 113,
+        question: "Caries represents what percentage of biological failures?",
+        options: ["16%", "26%", "36%", "46%"],
+        answer: "C",
+        correctText: "36%",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 114,
+        question: "Which is NOT a cause of cervical hypersensitivity?",
+        options: ["Gingival recession", "Over gingival retraction", "Excessive occlusal force", "Improper pontic design"],
+        answer: "D",
+        correctText: "Improper pontic design",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 115,
+        question: "Primary occlusal trauma occurs when:",
+        options: ["Periodontium is healthy", "Periodontium is diseased", "There is excessive bone resorption", "Tooth mobility is severe"],
+        answer: "A",
+        correctText: "Periodontium is healthy",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 116,
+        question: "Which is a mechanical failure in fixed prosthodontics?",
+        options: ["Caries", "Periodontal breakdown", "Prosthesis fracture", "Pulp injury"],
+        answer: "C",
+        correctText: "Prosthesis fracture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 117,
+        question: "All ceramic vertical fracture is caused by all EXCEPT:",
+        options: ["Sharp tooth preparation", "Shoulder finish line with sharp internal line angle", "Insufficient finish line thickness", "Properly restored proximal fracture"],
+        answer: "D",
+        correctText: "Properly restored proximal fracture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 118,
+        question: "The coefficient of thermal expansion of metal should be slightly higher than porcelain by:",
+        options: ["0.5 × 10⁻⁶", "1 × 10⁻⁶", "2 × 10⁻⁶", "3 × 10⁻⁶"],
+        answer: "B",
+        correctText: "1 × 10⁻⁶",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 119,
+        question: "Which is a cause of connector fracture?",
+        options: ["Proper connector size", "No porosity", "Improper soldering techniques", "Proper soldering"],
+        answer: "C",
+        correctText: "Improper soldering techniques",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 120,
+        question: "Esthetic failures include all EXCEPT:",
+        options: ["Improper shade selection", "Metal display in partial coverage", "Improper cement shade under laminate", "Connector fracture"],
+        answer: "D",
+        correctText: "Connector fracture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 121,
+        question: "Recurrent caries at the margin can be detected by:",
+        options: ["Visual inspection only", "Sharp explorer and bitewing radiograph", "Percussion test", "Thermal test"],
+        answer: "B",
+        correctText: "Sharp explorer and bitewing radiograph",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 122,
+        question: "Which is NOT a cause of abutment fracture?",
+        options: ["Recurrent caries", "Over reduction", "Proper occlusal forces", "Heavy occlusal forces"],
+        answer: "C",
+        correctText: "Proper occlusal forces",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 123,
+        question: "Perforation into the bifurcation area usually requires:",
+        options: ["MTA restoration", "RCT", "Extraction", "Periodontal surgery"],
+        answer: "C",
+        correctText: "Extraction",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 124,
+        question: "Which type of post shows similar modulus of elasticity to dentin?",
+        options: ["Cast post", "Fiber post", "Prefabricated metal post", "Zirconia post"],
+        answer: "B",
+        correctText: "Fiber post",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 125,
+        question: "Trauma to abutment can be caused by all EXCEPT:",
+        options: ["Improper soldering", "Proper path of insertion", "Absence of provisional", "Slight movement of teeth after impression"],
+        answer: "B",
+        correctText: "Proper path of insertion",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 126,
+        question: "Perforation into the periodontal ligament requires:",
+        options: ["MTA restoration", "Periodontal surgery and MTA", "Extraction", "RCT only"],
+        answer: "B",
+        correctText: "Periodontal surgery and MTA",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 127,
+        question: "Which is NOT a cause of all ceramic fracture?",
+        options: ["Sharp tooth preparation", "Insufficient finish line thickness", "Proper cementation technique", "Over occlusal reduction"],
+        answer: "C",
+        correctText: "Proper cementation technique",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 128,
+        question: "Which is a cause of veneering fracture in PFM restorations?",
+        options: ["Matching coefficient of thermal expansion", "Chemical bond between porcelain and metal", "Improper metal framework design", "Proper sandblasting"],
+        answer: "C",
+        correctText: "Improper metal framework design",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 129,
+        question: "Occlusal perforation leads to:",
+        options: ["Increased retention", "Cement dissolution", "Improved esthetics", "Better occlusion"],
+        answer: "B",
+        correctText: "Cement dissolution",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 130,
+        question: "Which is NOT a sign of periodontal breakdown?",
+        options: ["Redness and swelling", "Periodontal pocket formation", "Increased tooth stiffness", "Mobility of abutment"],
+        answer: "C",
+        correctText: "Increased tooth stiffness",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 131,
+        question: "Loss of retention can be caused by all EXCEPT:",
+        options: ["Over convergence", "Over occlusal reduction", "Proper prosthesis design", "Short post preparation"],
+        answer: "C",
+        correctText: "Proper prosthesis design",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 132,
+        question: "Which is an esthetic failure?",
+        options: ["Improper connector size", "Porosity", "Improper golden proportion", "Improper soldering"],
+        answer: "C",
+        correctText: "Improper golden proportion",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 133,
+        question: "The first post-cementation appointment should be after:",
+        options: ["1-3 days", "7-10 days", "2-3 weeks", "1 month"],
+        answer: "B",
+        correctText: "7-10 days",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 134,
+        question: "Diabetic patients need follow-up appointments every:",
+        options: ["1 month", "2 months", "3 months", "6 months"],
+        answer: "C",
+        correctText: "3 months",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 135,
+        question: "Regular radiographic follow-up should be done at intervals of:",
+        options: ["3 months", "6 months", "1 year", "2 years"],
+        answer: "C",
+        correctText: "1 year",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 136,
+        question: "Which instrument should be used for calculus removal around implants?",
+        options: ["Metal scaler", "Ultrasonic scaler", "Plastic scaler", "Diamond bur"],
+        answer: "C",
+        correctText: "Plastic scaler",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 137,
+        question: "Chlorhexidine gluconate 0.2% acts as:",
+        options: ["Analgesic", "Anti-plaque agent", "Antibiotic", "Anti-inflammatory"],
+        answer: "B",
+        correctText: "Anti-plaque agent",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 138,
+        question: "Calculus removal around resin bonded bridges should be done with:",
+        options: ["Ultrasonic scalers", "Hand instruments", "Rotary instruments", "Laser"],
+        answer: "B",
+        correctText: "Hand instruments",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 139,
+        question: "A toothbrush can clean subgingivally up to:",
+        options: ["0.2 mm", "0.5 mm", "1.0 mm", "2.0 mm"],
+        answer: "B",
+        correctText: "0.5 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 140,
+        question: "Dental floss can clean subgingivally up to:",
+        options: ["1.0 mm", "1.5 mm", "2.5 mm", "3.5 mm"],
+        answer: "C",
+        correctText: "2.5 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 141,
+        question: "Mouth rinses with chlorhexidine are used as:",
+        options: ["Pain reliever", "Anti-plaque agents", "Whitening agents", "Desensitizing agents"],
+        answer: "B",
+        correctText: "Anti-plaque agents",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 142,
+        question: "Super floss consists of all EXCEPT:",
+        options: ["Stiff segment for threading", "Large diameter filament brush", "Conventional waxed floss", "Conventional unwaxed floss"],
+        answer: "C",
+        correctText: "Conventional waxed floss",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 143,
+        question: "Which is a conservative method of crown removal?",
+        options: ["Crown splitting", "Ultrasonic", "Drilling through porcelain", "Metalift system"],
+        answer: "B",
+        correctText: "Ultrasonic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 144,
+        question: "The Richwill FPD remover uses:",
+        options: ["Ultrasonic energy", "Thermoplastic adhesive resin", "Spring loaded force", "Air pressure"],
+        answer: "B",
+        correctText: "Thermoplastic adhesive resin",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 145,
+        question: "The CORONA Flex FPD remover uses:",
+        options: ["Ultrasonic energy", "Thermoplastic resin", "Air-driven device", "Sliding hammer"],
+        answer: "C",
+        correctText: "Air-driven device",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 146,
+        question: "The Metalift System is classified as:",
+        options: ["Conservative method", "Semi-conservative method", "Destructive method", "Non-invasive method"],
+        answer: "B",
+        correctText: "Semi-conservative method",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 147,
+        question: "Crown splitting is classified as:",
+        options: ["Conservative method", "Semi-conservative method", "Destructive method", "Preventive method"],
+        answer: "C",
+        correctText: "Destructive method",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 148,
+        question: "Intraoral porcelain repair requires all EXCEPT:",
+        options: ["Beveling the fractured surface", "Etching with phosphoric acid", "Applying silane coupling agent", "Gold foil placement"],
+        answer: "D",
+        correctText: "Gold foil placement",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 149,
+        question: "Which is NOT a cause for crown removal?",
+        options: ["Biological failure", "Mechanical failure", "Esthetic failure", "Successful treatment"],
+        answer: "D",
+        correctText: "Successful treatment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 150,
+        question: "The Wamkey System uses:",
+        options: ["Ultrasonic energy", "Oval shaped keys", "Thermoplastic resin", "Air pressure"],
+        answer: "B",
+        correctText: "Oval shaped keys",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 151,
+        question: "The Kline System is similar to:",
+        options: ["Richwill remover", "Metalift system", "CORONA flex", "Ultrasonic"],
+        answer: "B",
+        correctText: "Metalift system",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 152,
+        question: "In porcelain repair, beveling the fractured surface serves to:",
+        options: ["Reduce surface area", "Increase surface area for bonding", "Remove sound enamel", "Smooth the surface"],
+        answer: "B",
+        correctText: "Increase surface area for bonding",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 153,
+        question: "The first ceramic crowns were made by:",
+        options: ["Weinstein", "Land", "Duchateau", "Brånemark"],
+        answer: "B",
+        correctText: "Land",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 154,
+        question: "Leucite was introduced in ceramics to:",
+        options: ["Improve esthetics", "Match thermal expansion with metal", "Increase translucency", "Reduce cost"],
+        answer: "B",
+        correctText: "Match thermal expansion with metal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 155,
+        question: "Which ceramic system has the highest strength?",
+        options: ["Feldspathic porcelain", "Leucite-reinforced", "Zirconia", "Lithium disilicate"],
+        answer: "C",
+        correctText: "Zirconia",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 156,
+        question: "IPS e.max is classified as:",
+        options: ["Feldspathic ceramic", "Lithium disilicate ceramic", "Zirconia ceramic", "Leucite ceramic"],
+        answer: "B",
+        correctText: "Lithium disilicate ceramic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 157,
+        question: "Slip casting is used for:",
+        options: ["Feldspathic porcelain", "Leucite-reinforced", "In-Ceram systems", "Zirconia"],
+        answer: "C",
+        correctText: "In-Ceram systems",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 158,
+        question: "CAD/CAM stands for:",
+        options: ["Computer-Aided Design/Computer-Aided Milling", "Computer-Aided Design/Computer-Assisted Manufacture", "Computer-Aided Dentistry/Computer-Assisted Milling", "Ceramic-Aided Design/Computer-Assisted Manufacture"],
+        answer: "B",
+        correctText: "Computer-Aided Design/Computer-Assisted Manufacture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 159,
+        question: "Cerec system is classified as:",
+        options: ["Copy milling system", "Chair-side CAD/CAM system", "Heat-pressed system", "Slip casting system"],
+        answer: "B",
+        correctText: "Chair-side CAD/CAM system",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 160,
+        question: "The Captek system uses:",
+        options: ["Zirconia framework", "Metal-impregnated wax sheets", "Lithium disilicate", "Leucite-reinforced"],
+        answer: "B",
+        correctText: "Metal-impregnated wax sheets",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 161,
+        question: "Hydrofluoric acid etching time for feldspathic porcelain is typically:",
+        options: ["30 seconds", "1 minute", "5 minutes", "10 minutes"],
+        answer: "C",
+        correctText: "5 minutes",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 162,
+        question: "Zirconia blocks are milled at larger dimension to compensate for:",
+        options: ["Machining errors", "Sintering shrinkage (20-25%)", "Wear during use", "Color changes"],
+        answer: "B",
+        correctText: "Sintering shrinkage (20-25%)",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 163,
+        question: "In-Ceram Zirconia has strength of approximately:",
+        options: ["350 MPa", "500 MPa", "700 MPa", "1000 MPa"],
+        answer: "C",
+        correctText: "700 MPa",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 164,
+        question: "Which ceramic material is NOT indicated for laminate veneers?",
+        options: ["Feldspathic porcelain", "Leucite-reinforced", "Zirconia monolithic", "Lithium disilicate"],
+        answer: "C",
+        correctText: "Zirconia monolithic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 165,
+        question: "Stress corrosion in ceramics is caused by:",
+        options: ["Heat", "Moisture", "Light", "Pressure"],
+        answer: "B",
+        correctText: "Moisture",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 166,
+        question: "The VITA Mark II block is made from:",
+        options: ["Zirconia", "Lithium disilicate", "Feldspathic ceramic", "Alumina"],
+        answer: "C",
+        correctText: "Feldspathic ceramic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 167,
+        question: "Monolithic zirconia restorations:",
+        options: ["Require veneering", "Are only for anterior teeth", "Have no veneering layer", "Are less strong than layered zirconia"],
+        answer: "C",
+        correctText: "Have no veneering layer",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 168,
+        question: "Rochette bridge uses:",
+        options: ["Chemical bonding only", "Perforations for mechanical retention", "Etched cast retainers", "Salt crystals"],
+        answer: "B",
+        correctText: "Perforations for mechanical retention",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 169,
+        question: "Maryland bridge uses:",
+        options: ["Perforations", "Electrolytic etching", "Salt crystals", "Mesh pattern"],
+        answer: "B",
+        correctText: "Electrolytic etching",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 170,
+        question: "Virginia bridge uses:",
+        options: ["Electrolytic etching", "Perforations", "Salt crystals", "Chemical bonding"],
+        answer: "C",
+        correctText: "Salt crystals",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 171,
+        question: "Rocatac system uses:",
+        options: ["Tin plating", "Silica coating through abrasion", "Electrolytic etching", "Salt crystals"],
+        answer: "B",
+        correctText: "Silica coating through abrasion",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 172,
+        question: "In anterior resin bonded bridge, reduction should stop:",
+        options: ["At the incisal edge", "1.5-2 mm before incisal edge", "At the gingival margin", "At the contact point"],
+        answer: "B",
+        correctText: "1.5-2 mm before incisal edge",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 173,
+        question: "Posterior resin bonded bridge requires _____ wrap around:",
+        options: ["90°", "120°", "180°", "360°"],
+        answer: "C",
+        correctText: "180°",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 174,
+        question: "Tin plating is used primarily with:",
+        options: ["Non-precious alloys", "Precious alloys", "All alloys", "Ceramics"],
+        answer: "B",
+        correctText: "Precious alloys",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 175,
+        question: "Silicoater technique involves:",
+        options: ["Electrolytic etching", "Flame application of silica-carbon layer", "Salt crystals", "Perforations"],
+        answer: "B",
+        correctText: "Flame application of silica-carbon layer",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 176,
+        question: "Cojet system uses:",
+        options: ["Tin plating", "Air abrasion with silica-modified alumina", "Electrolytic etching", "Heat treatment"],
+        answer: "B",
+        correctText: "Air abrasion with silica-modified alumina",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 177,
+        question: "The recommended occlusal rest depth in posterior resin bonded bridge is:",
+        options: ["0.5 mm", "1 mm", "1.5 mm", "2 mm"],
+        answer: "B",
+        correctText: "1 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 178,
+        question: "Duralingual system uses:",
+        options: ["Perforations", "Cast mesh pattern", "Salt crystals", "Electrolytic etching"],
+        answer: "B",
+        correctText: "Cast mesh pattern",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 179,
+        question: "In anterior resin bonded bridge, the metal framework extends proximally to:",
+        options: ["The contact point", "180° wrap around", "The incisal edge", "The lingual surface only"],
+        answer: "B",
+        correctText: "180° wrap around",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 180,
+        question: "Heating of gold alloys at 400°C for 3-5 minutes increases bond with:",
+        options: ["Zinc phosphate cement", "4-META adhesive resin", "Glass ionomer", "Polycarboxylate cement"],
+        answer: "B",
+        correctText: "4-META adhesive resin",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 181,
+        question: "The lingual reduction for anterior resin bonded bridge should be:",
+        options: ["0.2-0.3 mm", "0.6-0.8 mm", "1.0-1.2 mm", "1.5-2.0 mm"],
+        answer: "B",
+        correctText: "0.6-0.8 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 182,
+        question: "Etching of enamel for resin bonded bridge uses:",
+        options: ["10% phosphoric acid for 60 seconds", "37-40% phosphoric acid for 60 seconds", "10% hydrofluoric acid for 60 seconds", "37% phosphoric acid for 15 seconds"],
+        answer: "B",
+        correctText: "37-40% phosphoric acid for 60 seconds",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 183,
+        question: "The amount of facial reduction for porcelain laminate veneer is:",
+        options: ["0.1-0.2 mm", "0.3-0.5 mm", "0.5-0.7 mm", "1.0-1.5 mm"],
+        answer: "C",
+        correctText: "0.5-0.7 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 184,
+        question: "The recommended finish line for porcelain laminate veneer is:",
+        options: ["Feather edge", "Long chamfer", "Shoulder", "Bevel"],
+        answer: "B",
+        correctText: "Long chamfer",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 185,
+        question: "Which is an indication for porcelain laminate veneers?",
+        options: ["Bruxism", "Short teeth", "Diastema closure", "Insufficient enamel"],
+        answer: "C",
+        correctText: "Diastema closure",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 186,
+        question: "The incisal reduction for porcelain laminate veneer is approximately:",
+        options: ["0.5 mm", "1.0 mm", "1.5-2.0 mm", "2.5-3.0 mm"],
+        answer: "C",
+        correctText: "1.5-2.0 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 187,
+        question: "The try-in of porcelain veneers should be done with:",
+        options: ["Water only", "Glycerin, water, or try-in paste", "Permanent cement", "Temporary cement"],
+        answer: "B",
+        correctText: "Glycerin, water, or try-in paste",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 188,
+        question: "Who made the first ceramic crowns using platinum foil?",
+        options: ["Alexis Duchateau", "C.H. Land", "Weinstein", "Rochette"],
+        answer: "B",
+        correctText: "C.H. Land",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 189,
+        question: "Leucite is added to ceramic to:",
+        options: ["Increase translucency", "Match thermal expansion with metal", "Reduce cost", "Improve color"],
+        answer: "B",
+        correctText: "Match thermal expansion with metal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 190,
+        question: "Monolithic zirconia restorations are known for:",
+        options: ["Highest esthetics", "Outstanding strength", "Maximum translucency", "Ease of repair"],
+        answer: "B",
+        correctText: "Outstanding strength",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 191,
+        question: "Which ceramic strengthening method relies on ion exchange?",
+        options: ["Crystalline reinforcement", "Chemical strengthening", "Glazing", "Thermal tempering"],
+        answer: "B",
+        correctText: "Chemical strengthening",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 192,
+        question: "In-Ceram Alumina has a flexural strength approximately:",
+        options: ["100 MPa", "350 MPa", "500 MPa", "700 MPa"],
+        answer: "C",
+        correctText: "500 MPa",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 193,
+        question: "The main disadvantage of early all-ceramic restorations was:",
+        options: ["Poor esthetics", "Low strength", "High cost", "Difficult fabrication"],
+        answer: "B",
+        correctText: "Low strength",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 194,
+        question: "IPS e.max contains which crystalline phase?",
+        options: ["Leucite", "Lithium disilicate", "Alumina", "Zirconia"],
+        answer: "B",
+        correctText: "Lithium disilicate",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 195,
+        question: "The slip casting technique is used for:",
+        options: ["Feldspathic porcelain", "In-Ceram systems", "Direct composites", "Acrylic teeth"],
+        answer: "B",
+        correctText: "In-Ceram systems",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 196,
+        question: "CAD/CAM stands for:",
+        options: ["Computer-Aided Design/Computer-Aided Manufacturing", "Ceramic Aided Design/Ceramic Aided Manufacturing", "Crown and Design/Crown and Make", "None of the above"],
+        answer: "A",
+        correctText: "Computer-Aided Design/Computer-Aided Manufacturing",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 197,
+        question: "The Cerec system is an example of:",
+        options: ["Chairside full system", "Lost wax technique", "Slip casting", "Heat pressing"],
+        answer: "A",
+        correctText: "Chairside full system",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 198,
+        question: "Pre-sintered zirconia blocks shrink approximately how much upon sintering?",
+        options: ["1-5%", "10-15%", "20-25%", "40-50%"],
+        answer: "C",
+        correctText: "20-25%",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 199,
+        question: "Y-TZP in zirconia ceramics stands for:",
+        options: ["Yttria-stabilized tetragonal zirconia polycrystal", "Yttrium-tetragonal zirconia porcelain", "Yellow translucent zirconia porcelain", "Yttrium-cubic zirconia porcelain"],
+        answer: "A",
+        correctText: "Yttria-stabilized tetragonal zirconia polycrystal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 200,
+        question: "Which all-ceramic system uses a platinum foil matrix?",
+        options: ["CAD/CAM", "Conventional feldspathic", "Heat-pressed", "Slip cast"],
+        answer: "B",
+        correctText: "Conventional feldspathic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 201,
+        question: "Hydrofluoric acid is used to:",
+        options: ["Polish ceramic", "Etch ceramic for bonding", "Clean the tooth", "Dissolve metal"],
+        answer: "B",
+        correctText: "Etch ceramic for bonding",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 202,
+        question: "Silane coupling agent functions to:",
+        options: ["Bond resin to ceramic", "Etch enamel", "Clean the restoration", "Increase opacity"],
+        answer: "A",
+        correctText: "Bond resin to ceramic",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 203,
+        question: "Which ceramic has the highest flexural strength?",
+        options: ["Feldspathic", "Leucite-reinforced", "Zirconia", "Lithium disilicate"],
+        answer: "C",
+        correctText: "Zirconia",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 204,
+        question: "In-Ceram Zirconia strength is approximately:",
+        options: ["200 MPa", "350 MPa", "500 MPa", "700 MPa"],
+        answer: "D",
+        correctText: "700 MPa",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 205,
+        question: "Heat-pressed ceramics are invested and pressed similar to:",
+        options: ["Acrylic resin", "Gold casting", "Composite filling", "Amalgam"],
+        answer: "B",
+        correctText: "Gold casting",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 206,
+        question: "The main advantage of all-ceramic over metal-ceramic is:",
+        options: ["Higher strength", "Better esthetics", "Lower cost", "Easier fabrication"],
+        answer: "B",
+        correctText: "Better esthetics",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 207,
+        question: "Procera All-Ceram uses which coping material?",
+        options: ["Leucite", "Lithium disilicate", "High-alumina", "Zirconia"],
+        answer: "C",
+        correctText: "High-alumina",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 208,
+        question: "FRC substructure is veneered with:",
+        options: ["Metal alloy", "Particulate composite", "Pure ceramic", "Acrylic resin"],
+        answer: "B",
+        correctText: "Particulate composite",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 209,
+        question: "Which fiber type has highest flexural strength in unidirectional form?",
+        options: ["Polyethylene", "Glass", "Carbon", "Nylon"],
+        answer: "B",
+        correctText: "Glass",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 210,
+        question: "Unidirectional glass FRC flexural strength ranges from:",
+        options: ["100-200 MPa", "200-400 MPa", "500-1200 MPa", "1500-2000 MPa"],
+        answer: "C",
+        correctText: "500-1200 MPa",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 211,
+        question: "Polyethylene fibers are typically available in which architecture?",
+        options: ["Unidirectional only", "Woven or braided", "Only loose fibers", "Only pre-impregnated"],
+        answer: "B",
+        correctText: "Woven or braided",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 212,
+        question: "Which is a resin-preimpregnated FRC material?",
+        options: ["Ribbond", "GlasSpan", "everStick", "All of the above"],
+        answer: "C",
+        correctText: "everStick",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 213,
+        question: "The Rochette bridge uses which type of retention?",
+        options: ["Chemical bonding", "Perforations in metal", "Etched ceramic", "Macroscopic mesh"],
+        answer: "B",
+        correctText: "Perforations in metal",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 214,
+        question: "The Maryland bridge uses:",
+        options: ["Perforations", "Electrolytic etching of Ni-Cr alloys", "Salt crystals", "Mesh pattern"],
+        answer: "B",
+        correctText: "Electrolytic etching of Ni-Cr alloys",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 215,
+        question: "For anterior resin-bonded bridge, proximal grooves are used to:",
+        options: ["Increase retention", "Improve esthetics", "Reduce metal thickness", "Simplify impression"],
+        answer: "A",
+        correctText: "Increase retention",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 216,
+        question: "The Virginia bridge uses:",
+        options: ["Electrolytic etching", "Lost salt crystal technique", "Tin plating", "Silicoater"],
+        answer: "B",
+        correctText: "Lost salt crystal technique",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 217,
+        question: "Rocatac system deposits which coating on alloy surface?",
+        options: ["Tin oxide", "Silica and alumina", "Gold", "Carbon"],
+        answer: "B",
+        correctText: "Silica and alumina",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 218,
+        question: "In posterior RBFPD, the framework should extend buccally beyond line angles by:",
+        options: ["90 degrees", "180 degrees", "270 degrees", "360 degrees"],
+        answer: "B",
+        correctText: "180 degrees",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 219,
+        question: "Cojet system uses alumina modified with:",
+        options: ["Tin", "Silicic acid", "Gold", "Carbon"],
+        answer: "B",
+        correctText: "Silicic acid",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 220,
+        question: "Heating gold alloys at 400°C for 3-5 minutes enhances bonding of:",
+        options: ["Zinc phosphate", "4-META resin", "Glass ionomer", "Polycarboxylate"],
+        answer: "B",
+        correctText: "4-META resin",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 221,
+        question: "Occlusal rest in posterior RBFPD should be deep approximately:",
+        options: ["0.2 mm", "0.5 mm", "1 mm", "2 mm"],
+        answer: "C",
+        correctText: "1 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 222,
+        question: "In anterior RBFPD, lingual reduction should stop before incisal edge by:",
+        options: ["0.5 mm", "1.5-2 mm", "3 mm", "4 mm"],
+        answer: "B",
+        correctText: "1.5-2 mm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 223,
+        question: "Electrolytic etching of Ni-Cr alloy typically takes:",
+        options: ["30 seconds", "3 minutes", "20 minutes", "1 hour"],
+        answer: "B",
+        correctText: "3 minutes",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 224,
+        question: "Which is NOT a cause of dislodgment of resin-bonded retainers?",
+        options: ["Improper patient selection", "Insufficient lingual reduction", "Metal contamination", "Supragingival margin"],
+        answer: "D",
+        correctText: "Supragingival margin",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 225,
+        question: "Duralingual system uses:",
+        options: ["Perforations", "Cast mesh pattern", "Salt crystals", "Acid etching"],
+        answer: "B",
+        correctText: "Cast mesh pattern",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 226,
+        question: "Tin plating layer thickness is approximately:",
+        options: ["0.01-0.05 μ", "0.2-0.4 μ", "1-2 μ", "5-10 μ"],
+        answer: "B",
+        correctText: "0.2-0.4 μ",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 227,
+        question: "Sandblasting for metal surface treatment uses which particle size?",
+        options: ["50 μm", "250 μm", "500 μm", "1000 μm"],
+        answer: "B",
+        correctText: "250 μm",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 228,
+        question: "Cement-retained implant crowns are luted to:",
+        options: ["Implant body directly", "Screw-retained abutment", "Healing abutment", "Waxing sleeve"],
+        answer: "B",
+        correctText: "Screw-retained abutment",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 229,
+        question: "Main advantage of screw-retained implant crown is:",
+        options: ["Lower cost", "Retrievability", "Better esthetics", "No screw loosening"],
+        answer: "B",
+        correctText: "Retrievability",
+        isTrueFalse: false,
+        explanation: ""
+    },
+    {
+        id: 230,
+        question: "Connecting a single implant to natural tooth can cause:",
+        options: ["Improved stability", "Stress at implant neck", "Faster healing", "No problems"],
+        answer: "B",
+        correctText: "Stress at implant neck",
+        isTrueFalse: false,
+        explanation: ""
+    },
+];
+
+        let currentQuestions = [];
+        let userAnswers = {};
+        let startTime;
+        let timerInterval;
+        let answeredCount = 0;
+
+        // Initialize particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function startQuiz() {
+            currentQuestions = [...questionsData];
+            initializeQuiz();
+        }
+
+        function startQuizRandom() {
+            currentQuestions = shuffleArray([...questionsData]);
+            initializeQuiz();
+        }
+
+        function initializeQuiz() {
+            userAnswers = {};
+            answeredCount = 0;
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('quizScreen').style.display = 'block';
+            document.getElementById('timer').style.display = 'flex';
+
+            document.getElementById('totalCount').textContent = currentQuestions.length;
+            document.getElementById('total-q-header').textContent = currentQuestions.length;
+            document.getElementById('answeredCount').textContent = '0';
+            document.getElementById('answered-header').textContent = '0';
+
+            renderQuestions();
+            startTimer();
+            window.scrollTo(0, 0);
+        }
+
+        function startTimer() {
+            startTime = Date.now();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60).toString().padStart(2, '0');
+                const seconds = (elapsed % 60).toString().padStart(2, '0');
+                document.getElementById('timerText').textContent = `${minutes}:${seconds}`;
+            }, 1000);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+
+            currentQuestions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                card.id = `question-${q.id}`;
+
+                const badgeClass = q.isTrueFalse ? 'badge-tf' : 'badge-mcq';
+                const badgeText = q.isTrueFalse ? 'صح/خطأ' : 'اختيار من متعدد';
+
+                let optionsHTML = '';
+                q.options.forEach((opt, optIndex) => {
+                    const letter = String.fromCharCode(65 + optIndex); // A, B, C, D
+                    optionsHTML += `
+                        <div class="option" onclick="selectOption(${q.id}, '${letter}', this)" data-letter="${letter}">
+                            <div class="option-letter">${letter}</div>
+                            <div class="option-text">${opt}</div>
+                        </div>
+                    `;
+                });
+
+                card.innerHTML = `
+                    <div class="question-header">
+                        <span class="question-number">
+                            <i class="fas fa-question-circle"></i>
+                            سؤال ${index + 1}
+                        </span>
+                        <span class="question-badge ${badgeClass}">${badgeText}</span>
+                    </div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="options-list">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback" id="feedback-${q.id}"></div>
+                    <div class="explanation" id="explanation-${q.id}">
+                        <div class="explanation-title">
+                            <i class="fas fa-lightbulb"></i>
+                            التوضيح
+                        </div>
+                        <div id="explanation-text-${q.id}"></div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function selectOption(questionId, letter, element) {
+            if (userAnswers[questionId] !== undefined) return; // Already answered
+
+            const question = currentQuestions.find(q => q.id === questionId);
+            const isCorrect = letter === question.answer;
+
+            userAnswers[questionId] = {
+                selected: letter,
+                correct: isCorrect,
+                question: question
+            };
+
+            answeredCount++;
+            updateProgress();
+
+            // Visual feedback
+            const card = document.getElementById(`question-${questionId}`);
+            const options = card.querySelectorAll('.option');
+
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.style.cursor = 'default';
+                const optLetter = opt.getAttribute('data-letter');
+
+                if (optLetter === question.answer) {
+                    opt.classList.add('correct');
+                } else if (optLetter === letter && !isCorrect) {
+                    opt.classList.add('wrong');
+                }
+
+                if (optLetter === letter) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            // Show feedback
+            const feedback = document.getElementById(`feedback-${questionId}`);
+            const explanation = document.getElementById(`explanation-${questionId}`);
+            const explanationText = document.getElementById(`explanation-text-${questionId}`);
+
+            if (isCorrect) {
+                feedback.className = 'feedback feedback-correct';
+                feedback.innerHTML = `
+                    <span class="feedback-icon"><i class="fas fa-check-circle"></i></span>
+                    <span class="feedback-text">إجابة صحيحة! أحسنت</span>
+                `;
+            } else {
+                feedback.className = 'feedback feedback-wrong';
+                feedback.innerHTML = `
+                    <span class="feedback-icon"><i class="fas fa-times-circle"></i></span>
+                    <span class="feedback-text">إجابة خاطئة</span>
+                    <div class="correct-answer-text">
+                        الإجابة الصحيحة: <strong>${question.correctText}</strong>
+                    </div>
+                `;
+            }
+
+            feedback.style.display = 'block';
+
+            // Show explanation if exists
+            if (question.explanation) {
+                explanationText.textContent = question.explanation;
+                explanation.style.display = 'block';
+            }
+
+            // Smooth scroll to next unanswered question
+            const nextUnanswered = currentQuestions.find(q => userAnswers[q.id] === undefined);
+            if (nextUnanswered) {
+                setTimeout(() => {
+                    document.getElementById(`question-${nextUnanswered.id}`).scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'center' 
+                    });
+                }, 800);
+            }
+        }
+
+        function updateProgress() {
+            const percentage = (answeredCount / currentQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('answeredCount').textContent = answeredCount;
+            document.getElementById('answered-header').textContent = answeredCount;
+        }
+
+        function submitQuiz() {
+            if (answeredCount === 0) {
+                alert('الرجاء الإجابة على سؤال واحد على الأقل قبل إنهاء الاختبار');
+                return;
+            }
+
+            clearInterval(timerInterval);
+            showResults();
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+
+            const correct = Object.values(userAnswers).filter(a => a.correct).length;
+            const wrong = Object.values(userAnswers).filter(a => !a.correct).length;
+            const total = Object.keys(userAnswers).length;
+            const percentage = total > 0 ? Math.round((correct / total) * 100) : 0;
+
+            // Update stats
+            document.getElementById('correctCount').textContent = correct;
+            document.getElementById('wrongCount').textContent = wrong;
+            document.getElementById('totalAnswered').textContent = total;
+
+            // Animate score circle
+            const circle = document.getElementById('scoreCircle');
+            const circumference = 2 * Math.PI * 80;
+            const offset = circumference - (percentage / 100) * circumference;
+
+            setTimeout(() => {
+                circle.style.strokeDashoffset = offset;
+            }, 300);
+
+            // Animate percentage
+            animateValue('scorePercentage', 0, percentage, 1500, '%');
+
+            // Grade and message
+            let grade, gradeClass, icon, title, message;
+            if (percentage >= 90) {
+                grade = 'ممتاز';
+                gradeClass = 'grade-excellent';
+                icon = '🏆';
+                title = 'أداء استثنائي!';
+                message = 'أحسنت! لديك إتقان ممتاز للمادة';
+                launchConfetti();
+            } else if (percentage >= 75) {
+                grade = 'جيد جداً';
+                gradeClass = 'grade-good';
+                icon = '⭐';
+                title = 'أحسنت!';
+                message = 'أداء جيد، استمر في التحسن';
+                launchConfetti();
+            } else if (percentage >= 60) {
+                grade = 'مقبول';
+                gradeClass = 'grade-pass';
+                icon = '👍';
+                title = 'يمكنك الأفضل';
+                message = 'حاول مراجعة الأسئلة الخاطئة';
+            } else {
+                grade = 'يحتاج مراجعة';
+                gradeClass = 'grade-fail';
+                icon = '📚';
+                title = 'لا تستسلم!';
+                message = 'راجع المادة وسيتحسن أداؤك بالتأكيد';
+            }
+
+            document.getElementById('gradeBadge').textContent = grade;
+            document.getElementById('gradeBadge').className = 'grade-badge ' + gradeClass;
+            document.getElementById('resultsIcon').textContent = icon;
+            document.getElementById('resultsTitle').textContent = title;
+            document.getElementById('resultsMessage').textContent = message;
+
+            window.scrollTo(0, 0);
+        }
+
+        function animateValue(id, start, end, duration, suffix = '') {
+            const obj = document.getElementById(id);
+            const range = end - start;
+            const minTimer = 50;
+            let stepTime = Math.abs(Math.floor(duration / range));
+            stepTime = Math.max(stepTime, minTimer);
+
+            let startTime = new Date().getTime();
+            let endTime = startTime + duration;
+            let timer;
+
+            function run() {
+                let now = new Date().getTime();
+                let remaining = Math.max((endTime - now) / duration, 0);
+                let value = Math.round(end - (remaining * range));
+                obj.textContent = value + suffix;
+                if (value == end) {
+                    clearInterval(timer);
+                }
+            }
+
+            timer = setInterval(run, stepTime);
+            run();
+        }
+
+        function retakeQuiz() {
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('reviewSection').style.display = 'none';
+            startQuiz();
+        }
+
+        function retakeQuizRandom() {
+            document.getElementById('resultsScreen').style.display = 'none';
+            document.getElementById('reviewSection').style.display = 'none';
+            startQuizRandom();
+        }
+
+        function showReview() {
+            const reviewSection = document.getElementById('reviewSection');
+            const reviewContainer = document.getElementById('reviewContainer');
+
+            if (reviewSection.style.display === 'block') {
+                reviewSection.style.display = 'none';
+                return;
+            }
+
+            reviewContainer.innerHTML = '';
+
+            const wrongAnswers = Object.values(userAnswers).filter(a => !a.correct);
+
+            if (wrongAnswers.length === 0) {
+                reviewContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: var(--success);">
+                        <i class="fas fa-trophy" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                        <p style="font-size: 1.2rem; font-weight: 700;">مبروك! لا توجد أخطاء للمراجعة</p>
+                    </div>
+                `;
+            } else {
+                wrongAnswers.forEach((ans, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'review-item';
+                    item.innerHTML = `
+                        <div class="review-status wrong">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="review-content">
+                            <div class="review-question">${index + 1}. ${ans.question.question}</div>
+                            <div class="review-answer">
+                                <div>إجابتك: <strong style="color: var(--error);">${ans.selected} - ${ans.question.options[ans.selected.charCodeAt(0) - 65]}</strong></div>
+                                <div>الصحيحة: <strong style="color: var(--success);">${ans.question.answer} - ${ans.question.correctText}</strong></div>
+                            </div>
+                        </div>
+                    `;
+                    reviewContainer.appendChild(item);
+                });
+            }
+
+            reviewSection.style.display = 'block';
+            reviewSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Confetti Effect
+        function launchConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#d4af37', '#1a5f3c', '#27ae60', '#f39c12', '#e74c3c', '#3498db'];
+
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    speed: Math.random() * 3 + 2,
+                    angle: Math.random() * 360,
+                    rotation: Math.random() * 0.2 - 0.1
+                });
+            }
+
+            let animationId;
+            let frameCount = 0;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                frameCount++;
+
+                particles.forEach(p => {
+                    p.y += p.speed;
+                    p.angle += p.rotation;
+
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.angle);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
+
+                    if (p.y > canvas.height) {
+                        p.y = -10;
+                        p.x = Math.random() * canvas.width;
+                    }
+                });
+
+                if (frameCount < 300) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+
+            animate();
+        }
+
+        // Handle window resize for canvas
+        window.addEventListener('resize', () => {
+            const canvas = document.getElementById('confetti-canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.getElementById('quizScreen').style.display === 'block') {
+                submitQuiz();
+            }
+        });
+    </script>
+</body>
+</html>
